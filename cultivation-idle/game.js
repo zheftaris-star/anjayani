@@ -28,6 +28,7 @@ const CLASSES = {
     name: "Pedang Ksatria",
     icon: "🗡",
     sprite: "🥷",
+    accent: ["🗡", "⚔"],
     desc: "Serangan cepat dan akurat. Spesialis damage fisik.",
     stats: { atkMult: 1.3, defMult: 1.0, hpMult: 1.0, critMult: 1.5, critChance: 0.2 },
     skills: ["slash", "whirlwind", "dragon_strike", "sword_rain"],
@@ -37,6 +38,7 @@ const CLASSES = {
     name: "Tinju Naga",
     icon: "👊",
     sprite: "🧑‍🎤",
+    accent: ["💪", "🔥"],
     desc: "Tahan banting, serangan berat. Spesialis HP & DEF.",
     stats: { atkMult: 1.1, defMult: 1.4, hpMult: 1.5, critMult: 1.3, critChance: 0.1 },
     skills: ["power_punch", "iron_body", "dragon_fist", "earth_quake"],
@@ -46,6 +48,7 @@ const CLASSES = {
     name: "Penyihir Mantra",
     icon: "🔮",
     sprite: "🧙",
+    accent: ["🔮", "✨"],
     desc: "Damage elemental besar. Area effect & crowd control.",
     stats: { atkMult: 1.5, defMult: 0.8, hpMult: 0.9, critMult: 2.0, critChance: 0.15 },
     skills: ["fireball", "ice_shard", "lightning_bolt", "meteor"],
@@ -55,6 +58,7 @@ const CLASSES = {
     name: "Tabib Roh",
     icon: "🌿",
     sprite: "🧑‍⚕️",
+    accent: ["🌿", "💚"],
     desc: "Penyembuh dengan sustain tinggi. Tahan di battle lama.",
     stats: { atkMult: 0.9, defMult: 1.2, hpMult: 1.3, critMult: 1.4, critChance: 0.12 },
     skills: ["heal", "shield", "holy_light", "life_drain"],
@@ -66,28 +70,28 @@ const CLASSES = {
 // ============================================================
 const SKILLS = {
   // ===== SWORD =====
-  slash:        { name: "Tebasan Kilat",  icon: "⚔",  dmg: 1.6,  cd: 3,  unlock: 0, fx: "fx-slash",     log: "menebas dengan kilat" },
-  whirlwind:    { name: "Pusaran Pedang", icon: "🌀", dmg: 2.0,  cd: 8,  unlock: 1, fx: "fx-slash",     log: "melancarkan Pusaran Pedang" },
-  dragon_strike:{ name: "Sabetan Naga",   icon: "🐉", dmg: 3.2,  cd: 15, unlock: 3, fx: "fx-dragon",    log: "memanggil Naga Pedang" },
-  sword_rain:   { name: "Hujan Pedang",   icon: "☄",  dmg: 4.5,  cd: 25, unlock: 5, fx: "fx-meteor",    log: "menurunkan Hujan Pedang" },
+  slash:        { name: "Tebasan Kilat",  icon: "⚔",  dmg: 1.6,  cd: 3,  unlock: 0, fx: "fx-slash",     sfx: "slash",   log: "menebas dengan kilat" },
+  whirlwind:    { name: "Pusaran Pedang", icon: "🌀", dmg: 2.0,  cd: 8,  unlock: 1, fx: "fx-slash",     sfx: "whirl",   log: "melancarkan Pusaran Pedang" },
+  dragon_strike:{ name: "Sabetan Naga",   icon: "🐉", dmg: 3.2,  cd: 15, unlock: 3, fx: "fx-dragon",    sfx: "dragon",  log: "memanggil Naga Pedang" },
+  sword_rain:   { name: "Hujan Pedang",   icon: "☄",  dmg: 4.5,  cd: 25, unlock: 5, fx: "fx-meteor",    sfx: "meteor",  log: "menurunkan Hujan Pedang" },
 
   // ===== FIST =====
-  power_punch:  { name: "Tinju Kuat",     icon: "👊", dmg: 1.8,  cd: 3,  unlock: 0, fx: "fx-impact",    log: "memukul dengan Tinju Kuat", impactText: "BAM!" },
-  iron_body:    { name: "Tubuh Besi",     icon: "🛡", dmg: 0,    cd: 10, unlock: 1, fx: "fx-shield",    heal: 0.3, log: "mengaktifkan Tubuh Besi" },
-  dragon_fist:  { name: "Tinju Naga",     icon: "🐲", dmg: 3.5,  cd: 15, unlock: 3, fx: "fx-impact",    log: "meledakkan Tinju Naga", impactText: "BOOM!" },
-  earth_quake:  { name: "Guncangan Bumi", icon: "💥", dmg: 5.0,  cd: 25, unlock: 5, fx: "fx-explosion", log: "mengguncang bumi" },
+  power_punch:  { name: "Tinju Kuat",     icon: "👊", dmg: 1.8,  cd: 3,  unlock: 0, fx: "fx-impact",    sfx: "punch",   log: "memukul dengan Tinju Kuat", impactText: "BAM!" },
+  iron_body:    { name: "Tubuh Besi",     icon: "🛡", dmg: 0,    cd: 10, unlock: 1, fx: "fx-shield",    sfx: "shield",  heal: 0.3, log: "mengaktifkan Tubuh Besi" },
+  dragon_fist:  { name: "Tinju Naga",     icon: "🐲", dmg: 3.5,  cd: 15, unlock: 3, fx: "fx-impact",    sfx: "boom",    log: "meledakkan Tinju Naga", impactText: "BOOM!" },
+  earth_quake:  { name: "Guncangan Bumi", icon: "💥", dmg: 5.0,  cd: 25, unlock: 5, fx: "fx-explosion", sfx: "explode", log: "mengguncang bumi" },
 
   // ===== MAGE =====
-  fireball:     { name: "Bola Api",       icon: "🔥", dmg: 2.0,  cd: 4,  unlock: 0, fx: "fx-fireball",  log: "melemparkan Bola Api" },
-  ice_shard:    { name: "Pecahan Es",     icon: "❄",  dmg: 2.5,  cd: 7,  unlock: 1, fx: "fx-ice",       log: "memanggil Pecahan Es" },
-  lightning_bolt:{ name: "Petir Halilintar",icon: "⚡",dmg: 3.5, cd: 12, unlock: 3, fx: "fx-lightning", log: "menurunkan Petir Halilintar" },
-  meteor:       { name: "Meteor",         icon: "☄",  dmg: 5.5,  cd: 22, unlock: 5, fx: "fx-meteor",    log: "menjatuhkan Meteor" },
+  fireball:     { name: "Bola Api",       icon: "🔥", dmg: 2.0,  cd: 4,  unlock: 0, fx: "fx-fireball",  sfx: "fireball",log: "melemparkan Bola Api" },
+  ice_shard:    { name: "Pecahan Es",     icon: "❄",  dmg: 2.5,  cd: 7,  unlock: 1, fx: "fx-ice",       sfx: "ice",     log: "memanggil Pecahan Es" },
+  lightning_bolt:{ name: "Petir Halilintar",icon: "⚡",dmg: 3.5, cd: 12, unlock: 3, fx: "fx-lightning", sfx: "thunder", log: "menurunkan Petir Halilintar" },
+  meteor:       { name: "Meteor",         icon: "☄",  dmg: 5.5,  cd: 22, unlock: 5, fx: "fx-meteor",    sfx: "meteor",  log: "menjatuhkan Meteor" },
 
   // ===== HEALER =====
-  heal:         { name: "Penyembuhan",    icon: "💚", dmg: 0,    cd: 5,  unlock: 0, fx: "fx-heal",      heal: 0.4, log: "menyembuhkan diri" },
-  shield:       { name: "Tameng Roh",     icon: "🛡", dmg: 1.0,  cd: 8,  unlock: 1, fx: "fx-shield",    heal: 0.2, log: "mengaktifkan Tameng Roh" },
-  holy_light:   { name: "Cahaya Suci",    icon: "✨", dmg: 2.8,  cd: 14, unlock: 3, fx: "fx-heal",      heal: 0.25, log: "menurunkan Cahaya Suci" },
-  life_drain:   { name: "Penyerap Jiwa",  icon: "🌑", dmg: 3.5,  cd: 20, unlock: 5, fx: "fx-void",      heal: 0.5, log: "menyerap jiwa musuh" },
+  heal:         { name: "Penyembuhan",    icon: "💚", dmg: 0,    cd: 5,  unlock: 0, fx: "fx-heal",      sfx: "heal",    heal: 0.4, log: "menyembuhkan diri" },
+  shield:       { name: "Tameng Roh",     icon: "🛡", dmg: 1.0,  cd: 8,  unlock: 1, fx: "fx-shield",    sfx: "shield",  heal: 0.2, log: "mengaktifkan Tameng Roh" },
+  holy_light:   { name: "Cahaya Suci",    icon: "✨", dmg: 2.8,  cd: 14, unlock: 3, fx: "fx-heal",      sfx: "holy",    heal: 0.25, log: "menurunkan Cahaya Suci" },
+  life_drain:   { name: "Penyerap Jiwa",  icon: "🌑", dmg: 3.5,  cd: 20, unlock: 5, fx: "fx-void",      sfx: "drain",   heal: 0.5, log: "menyerap jiwa musuh" },
 };
 
 // ============================================================
@@ -223,6 +227,90 @@ const ARTIFACTS = [
   { id: "a5", name: "Tombak Bayangan Qilin", desc: "Darah Qilin mengalir.",     cost: 2e6,    bonus: { atk: 1000, def: 500 },   unlockRealm: 5 },
   { id: "a6", name: "Pagoda Sembilan Lantai",desc: "Menara pusaka sekte kuno.", cost: 2e7,    bonus: { qiRateMult: 1.0, hp: 10000 }, unlockRealm: 6 },
 ];
+
+// ============================================================
+// SOUND ENGINE (procedural Web Audio — no downloads)
+// ============================================================
+const SFX = {
+  _ctx: null,
+  enabled: true,
+  muted: false,
+  _ensure() {
+    if (!this._ctx) {
+      try { this._ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch (e) { this.enabled = false; }
+    }
+    if (this._ctx && this._ctx.state === "suspended") this._ctx.resume();
+    return this._ctx;
+  },
+  _tone(freq, dur, type = "sine", vol = 0.15, opts = {}) {
+    if (!this.enabled || this.muted) return;
+    const ctx = this._ensure(); if (!ctx) return;
+    const now = ctx.currentTime;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, now);
+    if (opts.freqEnd) o.frequency.exponentialRampToValueAtTime(Math.max(20, opts.freqEnd), now + dur);
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(vol, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(now); o.stop(now + dur + 0.05);
+  },
+  _noise(dur, vol = 0.12, filterFreq = 2000, filterQ = 1) {
+    if (!this.enabled || this.muted) return;
+    const ctx = this._ensure(); if (!ctx) return;
+    const now = ctx.currentTime;
+    const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const filt = ctx.createBiquadFilter();
+    filt.type = "bandpass"; filt.frequency.value = filterFreq; filt.Q.value = filterQ;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(vol, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+    src.connect(filt); filt.connect(g); g.connect(ctx.destination);
+    src.start(now); src.stop(now + dur);
+  },
+  // ========= Named SFX library =========
+  play(name) {
+    if (!this.enabled || this.muted) return;
+    switch (name) {
+      case "click":    this._tone(800, 0.05, "square", 0.08); break;
+      case "hit":      this._tone(200, 0.08, "sawtooth", 0.18, { freqEnd: 80 }); this._noise(0.08, 0.1, 1500); break;
+      case "crit":     this._tone(1400, 0.08, "square", 0.15, { freqEnd: 600 }); this._noise(0.12, 0.14, 3000); setTimeout(()=>this._tone(900,0.1,"square",0.12),50); break;
+      case "miss":     this._tone(400, 0.1, "sine", 0.08, { freqEnd: 200 }); break;
+      case "enemy_hit":this._tone(150, 0.15, "sawtooth", 0.2, { freqEnd: 60 }); break;
+      case "slash":    this._noise(0.15, 0.18, 4000, 2); this._tone(1500, 0.1, "triangle", 0.08, { freqEnd: 400 }); break;
+      case "whirl":    for (let i = 0; i < 3; i++) setTimeout(() => { this._noise(0.1, 0.14, 3500, 2); this._tone(1200 - i*200, 0.08, "triangle", 0.07, { freqEnd: 300 }); }, i * 80); break;
+      case "dragon":   this._tone(80, 0.5, "sawtooth", 0.25, { freqEnd: 200 }); setTimeout(()=>this._tone(200, 0.3, "square", 0.18, { freqEnd: 1500 }), 200); break;
+      case "punch":    this._tone(120, 0.1, "square", 0.25, { freqEnd: 40 }); this._noise(0.1, 0.12, 800); break;
+      case "boom":     this._tone(60, 0.3, "sawtooth", 0.3, { freqEnd: 20 }); this._noise(0.3, 0.2, 400, 3); break;
+      case "explode":  this._noise(0.5, 0.25, 300, 2); this._tone(40, 0.5, "sawtooth", 0.2, { freqEnd: 15 }); setTimeout(()=>this._noise(0.3, 0.15, 1500), 100); break;
+      case "fireball": this._tone(200, 0.2, "sawtooth", 0.15, { freqEnd: 600 }); this._noise(0.25, 0.1, 1800, 3); break;
+      case "ice":      for (let i = 0; i < 4; i++) setTimeout(() => this._tone(1800 + i * 400, 0.08, "triangle", 0.1, { freqEnd: 2400 + i * 400 }), i * 40); break;
+      case "thunder":  this._tone(100, 0.05, "square", 0.25); this._noise(0.4, 0.2, 2500, 3); setTimeout(()=>{ this._tone(60, 0.3, "sawtooth", 0.2); this._noise(0.2, 0.15, 1000); }, 60); break;
+      case "meteor":   this._tone(1200, 0.6, "sawtooth", 0.1, { freqEnd: 80 }); setTimeout(()=>{ this._tone(50, 0.4, "sawtooth", 0.3); this._noise(0.5, 0.25, 500, 2); }, 500); break;
+      case "heal":     this._tone(600, 0.15, "sine", 0.12, { freqEnd: 1200 }); setTimeout(()=>this._tone(900, 0.2, "sine", 0.1, { freqEnd: 1500 }), 80); break;
+      case "shield":   this._tone(400, 0.2, "triangle", 0.15, { freqEnd: 800 }); this._tone(600, 0.3, "sine", 0.08, { freqEnd: 1000 }); break;
+      case "holy":     this._tone(800, 0.3, "sine", 0.12, { freqEnd: 1600 }); setTimeout(()=>this._tone(1200, 0.4, "sine", 0.1, { freqEnd: 2000 }), 100); setTimeout(()=>this._tone(1600, 0.3, "sine", 0.08), 200); break;
+      case "drain":    this._tone(400, 0.4, "sawtooth", 0.15, { freqEnd: 80 }); this._noise(0.4, 0.08, 300, 5); break;
+      case "victory":  [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => this._tone(f, 0.2, "triangle", 0.15), i * 100)); break;
+      case "defeat":   [400, 300, 200, 100].forEach((f, i) => setTimeout(() => this._tone(f, 0.3, "sawtooth", 0.18), i * 150)); break;
+      case "levelup":  [523, 659, 784, 1047, 1319].forEach((f, i) => setTimeout(() => this._tone(f, 0.15, "triangle", 0.15), i * 80)); break;
+      case "boss":     this._tone(60, 0.5, "sawtooth", 0.3, { freqEnd: 30 }); setTimeout(()=>{ this._tone(80, 0.4, "sawtooth", 0.25); this._noise(0.5, 0.15, 200, 3); }, 200); break;
+      case "meditate": this._tone(300, 0.4, "sine", 0.1, { freqEnd: 500 }); setTimeout(()=>this._tone(500, 0.3, "sine", 0.08), 200); break;
+      case "buy":      this._tone(1000, 0.08, "square", 0.1); setTimeout(()=>this._tone(1500, 0.08, "square", 0.1), 60); break;
+      case "thunder_trib": this._noise(0.6, 0.3, 800, 2); this._tone(50, 0.6, "sawtooth", 0.3); setTimeout(()=>{ this._noise(0.4, 0.25, 2000); this._tone(80, 0.4, "sawtooth", 0.25);}, 200); break;
+      default: this._tone(500, 0.1, "sine", 0.1);
+    }
+  },
+  toggleMute() {
+    this.muted = !this.muted;
+    return this.muted;
+  },
+};
 
 // ============================================================
 // STATE
@@ -372,6 +460,7 @@ function meditate() {
   const bonus = Math.max(1, Math.floor(qiRate() * 2));
   state.qi += bonus;
   log(`☯ Meditasi: +${fmt(bonus)} Qi`);
+  SFX.play("meditate");
   renderQi(); renderStats();
 }
 function tryBreakthrough() {
@@ -398,25 +487,29 @@ function doBreakthrough(guaranteed) {
     const lost = Math.floor(state.qi * 0.3);
     state.qi -= lost; state.luckBuff = 0;
     log(`⚡ GAGAL! Qi hilang ${fmt(lost)}.`, "danger");
+    SFX.play("defeat");
     showResult("💥 Terobosan Gagal", `Bencana petir terlalu kuat! Kamu kehilangan ${fmt(lost)} Qi. Coba lagi setelah memulihkan.`);
     renderAll(); return;
   }
   state.qi -= need; state.totalBreakthroughs++; state.luckBuff = 0;
   if (state.stage < STAGES_PER_REALM - 1) {
     state.stage++;
+    SFX.play("levelup");
     log(`✦ Terobosan berhasil! ${REALMS[state.realm].name} Tingkat ${state.stage + 1}`, "gold");
   } else {
     if (state.realm < REALMS.length - 1) {
       state.realm++; state.stage = 0;
       const r = REALMS[state.realm];
+      SFX.play("thunder_trib");
+      setTimeout(() => SFX.play("victory"), 700);
       log(`🌩 Melampaui bencana! Kini ${r.name}!`, "gold");
       showResult(`⚡ Memasuki ${r.name}!`, `Jiwamu ditempa petir. Kamu kini kultivator ${r.name}.`);
     } else {
+      SFX.play("victory");
       log(`∞ TELAH MENCAPAI KEABADIAN SEJATI!`, "gold");
       showResult("∞ KEABADIAN!", "Kamu mencapai puncak tertinggi kultivasi!");
     }
   }
-  // Restore HP on breakthrough
   const pl = playerPower();
   state.playerHp = pl.hp;
   renderAll();
@@ -431,8 +524,8 @@ function selectClass(id) {
   const pl = playerPower();
   state.playerHp = pl.hp;
   log(`🎭 Kamu memilih kelas ${CLASSES[id].name}!`, "gold");
+  SFX.play("levelup");
   renderAll();
-  // switch to adventure tab
   switchTab("adventure");
 }
 
@@ -444,26 +537,29 @@ function buyTechnique(id) {
   const lvl = state.techniques[id] || 0;
   if (lvl >= t.maxLvl) return;
   const cost = Math.floor(t.baseCost * Math.pow(1.35, lvl));
-  if (state.stones < cost) { log(`Batu Roh kurang (${fmt(cost)}).`, "danger"); return; }
+  if (state.stones < cost) { log(`Batu Roh kurang (${fmt(cost)}).`, "danger"); SFX.play("miss"); return; }
   state.stones -= cost; state.techniques[id] = lvl + 1;
   log(`🌀 ${t.name} → Lv.${lvl + 1}`, "green");
+  SFX.play("buy");
   renderAll();
 }
 function buyPill(id) {
   const p = PILLS.find(x => x.id === id); if (!p) return;
-  if (state.stones < p.cost) { log(`Batu Roh kurang (${fmt(p.cost)}).`, "danger"); return; }
+  if (state.stones < p.cost) { log(`Batu Roh kurang (${fmt(p.cost)}).`, "danger"); SFX.play("miss"); return; }
   state.stones -= p.cost;
   if (p.effect === "qi") { state.qi += p.value; log(`💊 ${p.name}: +${fmt(p.value)} Qi`, "green"); }
   else if (p.effect === "luck") { state.luckBuff = Math.max(state.luckBuff, p.value); log(`🌟 ${p.name}: +${Math.round(p.value * 100)}% peluang`, "green"); }
+  SFX.play("heal");
   renderAll();
 }
 function buyArtifact(id) {
   const a = ARTIFACTS.find(x => x.id === id); if (!a) return;
   if (state.artifacts.includes(id)) return;
   if (state.realm < (a.unlockRealm || 0)) return;
-  if (state.stones < a.cost) { log(`Batu Roh kurang (${fmt(a.cost)}).`, "danger"); return; }
+  if (state.stones < a.cost) { log(`Batu Roh kurang (${fmt(a.cost)}).`, "danger"); SFX.play("miss"); return; }
   state.stones -= a.cost; state.artifacts.push(id);
   log(`🗡 Memperoleh ${a.name}!`, "gold");
+  SFX.play("levelup");
   renderAll();
 }
 
@@ -504,7 +600,7 @@ function spawnEnemy() {
   };
   renderBattle();
   clearBattleLog();
-  if (isBoss) battleLog(`👑 BOSS muncul: ${tmpl.name}!`, "lose");
+  if (isBoss) { battleLog(`👑 BOSS muncul: ${tmpl.name}!`, "lose"); SFX.play("boss"); }
   else        battleLog(`Musuh muncul: ${tmpl.name}`, "enemy");
 }
 
@@ -527,9 +623,10 @@ function playerAttack(skillId) {
   if (skillId) {
     const sk = SKILLS[skillId]; if (!sk) return;
     const cd = state.skillCd[skillId] || 0;
-    if (cd > 0) { log(`${sk.name} masih cooldown.`, "danger"); return; }
+    if (cd > 0) { log(`${sk.name} masih cooldown.`, "danger"); SFX.play("miss"); return; }
     state.skillCd[skillId] = sk.cd * 1000;
     playFx(sk.fx, sk.impactText);
+    SFX.play(sk.sfx || "hit");
     skillName = sk.name;
     skillLog = sk.log;
     if (sk.dmg > 0) {
@@ -547,6 +644,7 @@ function playerAttack(skillId) {
     dmg = Math.max(1, pl.atk - Math.floor(e.def * 0.5) + Math.floor(Math.random() * pl.atk * 0.2));
     isCrit = Math.random() < pl.critChance;
     if (isCrit) dmg = Math.floor(dmg * pl.critMult);
+    SFX.play("hit");
   }
 
   // Animate
@@ -560,7 +658,8 @@ function playerAttack(skillId) {
       ef.classList.add("hurt-anim");
       setTimeout(() => ef.classList.remove("hurt-anim"), 300);
       showDamage(ef, dmg, "enemy", isCrit);
-      if (isCrit) shakeArena();
+      if (isCrit) { shakeArena(); SFX.play("crit"); flashScreen(); }
+      else SFX.play("enemy_hit");
     }, 200);
     battleLog(`⚔ Kamu ${skillName ? "(" + skillName + ")" : "menyerang"} -${fmt(dmg)} HP${isCrit ? " ⭐ CRIT!" : ""}`, "you");
   }
@@ -573,6 +672,7 @@ function playerAttack(skillId) {
   if (e.hp <= 0) {
     ef.classList.add("dead");
     battleLog(`🎉 ${e.name} dikalahkan! +${fmt(e.reward)} Batu Roh`, "win");
+    SFX.play(e.isBoss ? "victory" : "levelup");
     state.stones += e.reward;
     state.totalKills++;
     state.enemiesKilled++;
@@ -584,12 +684,12 @@ function playerAttack(skillId) {
     save();
 
     if (wasBoss) {
-      // Stage cleared
       const prev = state.clearedStages[state.regionId] || 0;
       if (state.regionStage + 1 > prev) state.clearedStages[state.regionId] = state.regionStage + 1;
       log(`🏆 Stage ${state.regionStage + 1} di ${region.name} BERHASIL DITAKLUKKAN!`, "gold");
       battleLog(`🏆 STAGE CLEAR! Hadiah bonus diterima.`, "win");
-      state.stones += e.reward * 2; // boss bonus
+      state.stones += e.reward * 2;
+      setTimeout(() => SFX.play("levelup"), 600);
       if (state.regionStage < region.stages - 1) {
         state.regionStage++;
       } else {
@@ -598,12 +698,11 @@ function playerAttack(skillId) {
       state.enemiesKilled = 0;
     } else if (state.enemiesKilled === state.enemiesPerStage) {
       battleLog(`👑 Boss akan segera muncul!`, "lose");
+      setTimeout(() => SFX.play("boss"), 600);
     }
 
     setTimeout(() => {
       ef.classList.remove("dead");
-      if (state.autoBattle) spawnEnemy();
-      else renderAdventureUI(false); // show next enemy button via spawn
       spawnEnemy();
     }, 900);
     return;
@@ -626,6 +725,7 @@ function enemyAttack() {
   if (!hit) {
     showDamage(pf, 0, "miss", false);
     battleLog(`💨 Kamu menghindar!`, "you");
+    SFX.play("miss");
     return;
   }
 
@@ -636,6 +736,7 @@ function enemyAttack() {
     pf.classList.add("hurt-anim");
     setTimeout(() => pf.classList.remove("hurt-anim"), 300);
     showDamage(pf, dmg, "player", false);
+    SFX.play("hit");
   }, 150);
   battleLog(`🩸 ${e.name} menyerang -${fmt(dmg)} HP`, "enemy");
 
@@ -643,6 +744,7 @@ function enemyAttack() {
     state.playerHp = Math.floor(pl.hp * 0.5); // revive at 50% hp
     battleLog(`💀 Kamu kalah! Kultivasimu melindungimu dari kematian (HP 50%).`, "lose");
     log(`💀 Pertempuran kalah. Kembali ke stage awal region.`, "danger");
+    SFX.play("defeat");
     state.enemiesKilled = 0;
     if (state.autoBattle) toggleAuto();
     state.enemy = null;
@@ -717,6 +819,13 @@ function shakeArena() {
   const a = document.getElementById("battle-arena");
   a.classList.add("shake");
   setTimeout(() => a.classList.remove("shake"), 300);
+}
+function flashScreen() {
+  const arena = document.getElementById("battle-arena");
+  const f = document.createElement("div");
+  f.className = "screen-flash";
+  arena.appendChild(f);
+  setTimeout(() => f.remove(), 300);
 }
 
 // ============================================================
@@ -863,8 +972,26 @@ function renderStageInfo() {
 function renderBattle() {
   const pl = playerPower();
   const cls = CLASSES[state.classId];
+  const pf = document.getElementById("player-fighter");
+  const pBox = document.getElementById("player-spritebox");
   const pSpr = document.getElementById("player-sprite");
+
+  // Apply class color + weapon accents to player
+  pf.classList.remove("cls-sword", "cls-fist", "cls-mage", "cls-healer");
+  if (cls) pf.classList.add("cls-" + cls.id);
   pSpr.textContent = cls ? cls.sprite : "🧘";
+
+  // Weapon accents (re-render)
+  pBox.querySelectorAll(".weapon-accent").forEach(w => w.remove());
+  if (cls && cls.accent) {
+    cls.accent.forEach((emo, i) => {
+      const w = document.createElement("div");
+      w.className = "weapon-accent " + (i === 0 ? "left" : "right");
+      w.textContent = emo;
+      pBox.appendChild(w);
+    });
+  }
+
   document.getElementById("player-name").textContent = cls ? cls.name : "Kultivator";
   const pHpMax = pl.hp;
   if (state.playerHp <= 0 || state.playerHp > pHpMax) state.playerHp = pHpMax;
@@ -872,9 +999,22 @@ function renderBattle() {
   document.getElementById("player-hpmax").textContent = fmt(pHpMax);
   document.getElementById("player-hpfill").style.width = Math.max(0, (state.playerHp / pHpMax) * 100) + "%";
 
+  // Enemy rendering with boss crown
   if (state.enemy) {
+    const ef = document.getElementById("enemy-fighter");
+    const eBox = document.getElementById("enemy-spritebox");
     document.getElementById("enemy-sprite").textContent = state.enemy.sprite;
-    const label = state.enemy.isBoss ? `${state.enemy.name}` : state.enemy.name;
+
+    // Boss mode class + crown
+    ef.classList.toggle("boss-mode", !!state.enemy.isBoss);
+    eBox.querySelectorAll(".boss-crown").forEach(c => c.remove());
+    if (state.enemy.isBoss) {
+      const crown = document.createElement("div");
+      crown.className = "boss-crown"; crown.textContent = "👑";
+      eBox.appendChild(crown);
+    }
+
+    const label = state.enemy.name;
     document.getElementById("enemy-name").innerHTML = state.enemy.isBoss
       ? `${label} <span class="boss-indicator">BOSS</span>`
       : label;
@@ -1064,8 +1204,13 @@ document.getElementById("btn-trib-cancel").addEventListener("click", () => {
 document.getElementById("btn-result-close").addEventListener("click", () => {
   document.getElementById("modal-result").classList.add("hidden");
 });
-document.getElementById("btn-save").addEventListener("click", () => { save(); log("💾 Disimpan.", "green"); });
+document.getElementById("btn-save").addEventListener("click", () => { save(); log("💾 Disimpan.", "green"); SFX.play("buy"); });
 document.getElementById("btn-reset").addEventListener("click", reset);
+document.getElementById("btn-mute").addEventListener("click", () => {
+  const muted = SFX.toggleMute();
+  document.getElementById("btn-mute").textContent = muted ? "🔇 Suara: OFF" : "🔊 Suara: ON";
+  if (!muted) SFX.play("click");
+});
 
 // Tab switching
 document.querySelectorAll(".tab").forEach(tab => {
