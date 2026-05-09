@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jalan Keabadian - Idle Cultivation RPG</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stars"></div>
+
+  <header class="top-bar">
+    <div class="title-block">
+      <h1>⛩ Jalan Keabadian</h1>
+      <div class="subtitle">Idle Cultivation RPG</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span class="icon">✦</span><span id="stat-qi">0</span> <small>Qi</small></div>
+      <div class="stat"><span class="icon">◈</span><span id="stat-stones">0</span> <small>Batu Roh</small></div>
+      <div class="stat"><span class="icon">⚡</span><span id="stat-qiRate">0</span> <small>Qi/dtk</small></div>
+    </div>
+  </header>
+
+  <main class="game">
+    <!-- LEFT PANEL: Kultivator Status -->
+    <section class="panel cultivator-panel">
+      <div class="avatar-frame">
+        <div class="avatar" id="avatar">☯</div>
+        <div class="aura" id="aura"></div>
+      </div>
+      <h2 id="realm-name">Fana</h2>
+      <div class="realm-stage" id="realm-stage">Tingkat 1</div>
+      <div class="qi-bar">
+        <div class="qi-fill" id="qi-fill"></div>
+        <div class="qi-text"><span id="qi-current">0</span> / <span id="qi-needed">100</span></div>
+      </div>
+      <div class="power-stats">
+        <div class="ps-item"><span>Serangan</span><b id="stat-atk">5</b></div>
+        <div class="ps-item"><span>Pertahanan</span><b id="stat-def">3</b></div>
+        <div class="ps-item"><span>HP Maks</span><b id="stat-hp">50</b></div>
+        <div class="ps-item"><span>Kekuatan Kultivasi</span><b id="stat-power">13</b></div>
+      </div>
+
+      <button id="btn-meditate" class="btn btn-primary">☯ Bermeditasi (+Qi)</button>
+      <button id="btn-breakthrough" class="btn btn-gold" disabled>✦ Terobosan Alam</button>
+
+      <div class="log-box">
+        <div class="log-title">📜 Catatan Pencapaian</div>
+        <ul id="log"></ul>
+      </div>
+    </section>
+
+    <!-- CENTER PANEL: Tabs -->
+    <section class="panel main-panel">
+      <nav class="tabs">
+        <button class="tab active" data-tab="techniques">🌀 Teknik</button>
+        <button class="tab" data-tab="pills">💊 Pil</button>
+        <button class="tab" data-tab="adventure">⚔ Petualangan</button>
+        <button class="tab" data-tab="artifacts">🗡 Artefak</button>
+      </nav>
+
+      <!-- TECHNIQUES TAB -->
+      <div class="tab-content active" id="tab-techniques">
+        <h3>Teknik Kultivasi</h3>
+        <p class="tab-desc">Pelajari teknik untuk meningkatkan kecepatan absorpsi Qi secara permanen.</p>
+        <div id="techniques-list" class="card-list"></div>
+      </div>
+
+      <!-- PILLS TAB -->
+      <div class="tab-content" id="tab-pills">
+        <h3>Pil Spiritual</h3>
+        <p class="tab-desc">Konsumsi pil untuk bonus Qi instan atau meningkatkan peluang terobosan.</p>
+        <div id="pills-list" class="card-list"></div>
+      </div>
+
+      <!-- ADVENTURE TAB -->
+      <div class="tab-content" id="tab-adventure">
+        <h3>Petualangan</h3>
+        <p class="tab-desc">Hadapi iblis dan binatang roh untuk mendapatkan batu roh.</p>
+        <div id="adventure-area">
+          <div id="monster-card" class="monster-card">
+            <div class="monster-name" id="m-name">Serigala Roh</div>
+            <div class="monster-stats">
+              <span>❤ HP: <b id="m-hp">50</b>/<b id="m-hpmax">50</b></span>
+              <span>⚔ ATK: <b id="m-atk">5</b></span>
+            </div>
+            <div class="monster-hpbar"><div class="monster-hpfill" id="m-hpfill"></div></div>
+            <div class="monster-reward">Hadiah: <b id="m-reward">10</b> Batu Roh</div>
+          </div>
+          <button id="btn-fight" class="btn btn-danger">⚔ Serang</button>
+          <div class="battle-log" id="battle-log"></div>
+          <button id="btn-next-monster" class="btn btn-secondary" style="display:none;">➤ Musuh Berikutnya</button>
+        </div>
+      </div>
+
+      <!-- ARTIFACTS TAB -->
+      <div class="tab-content" id="tab-artifacts">
+        <h3>Artefak</h3>
+        <p class="tab-desc">Perkuat dirimu dengan pusaka legendaris (bonus permanen).</p>
+        <div id="artifacts-list" class="card-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: TRIBULATION -->
+  <div id="modal-tribulation" class="modal hidden">
+    <div class="modal-content tribulation">
+      <h2>⚡ BENCANA PETIR ⚡</h2>
+      <p id="trib-text">Kamu akan menyeberangi bencana besar. Resiko tinggi, hadiah besar.</p>
+      <div class="trib-chance">Peluang sukses: <b id="trib-chance">70%</b></div>
+      <div class="trib-buttons">
+        <button id="btn-trib-accept" class="btn btn-gold">⚡ Hadapi!</button>
+        <button id="btn-trib-cancel" class="btn btn-secondary">Tunda</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESULT -->
+  <div id="modal-result" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="result-title">✦ Terobosan!</h2>
+      <p id="result-text"></p>
+      <button id="btn-result-close" class="btn btn-primary">Lanjutkan</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <button id="btn-save" class="btn-mini">💾 Simpan</button>
+    <button id="btn-reset" class="btn-mini btn-danger-mini">⟲ Reset Progres</button>
+    <span class="footer-tip">Progress tersimpan otomatis. Kultivasi berjalan meski tab ditutup.</span>
+  </footer>
+
+  <script src="game.js"></script>
+</body>
+</html>
