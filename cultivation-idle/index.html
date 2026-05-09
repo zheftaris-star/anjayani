@@ -22,7 +22,7 @@
   </header>
 
   <main class="game">
-    <!-- LEFT PANEL: Kultivator Status -->
+    <!-- LEFT PANEL -->
     <section class="panel cultivator-panel">
       <div class="avatar-frame">
         <div class="avatar" id="avatar">☯</div>
@@ -30,73 +30,126 @@
       </div>
       <h2 id="realm-name">Fana</h2>
       <div class="realm-stage" id="realm-stage">Tingkat 1</div>
+      <div class="class-name" id="class-label">Pilih kelas dulu!</div>
       <div class="qi-bar">
         <div class="qi-fill" id="qi-fill"></div>
         <div class="qi-text"><span id="qi-current">0</span> / <span id="qi-needed">100</span></div>
       </div>
       <div class="power-stats">
-        <div class="ps-item"><span>Serangan</span><b id="stat-atk">5</b></div>
-        <div class="ps-item"><span>Pertahanan</span><b id="stat-def">3</b></div>
-        <div class="ps-item"><span>HP Maks</span><b id="stat-hp">50</b></div>
-        <div class="ps-item"><span>Kekuatan Kultivasi</span><b id="stat-power">13</b></div>
+        <div class="ps-item"><span>ATK</span><b id="stat-atk">5</b></div>
+        <div class="ps-item"><span>DEF</span><b id="stat-def">3</b></div>
+        <div class="ps-item"><span>HP</span><b id="stat-hp">50</b></div>
+        <div class="ps-item"><span>Power</span><b id="stat-power">13</b></div>
       </div>
 
-      <button id="btn-meditate" class="btn btn-primary">☯ Bermeditasi (+Qi)</button>
+      <button id="btn-meditate" class="btn btn-primary">☯ Bermeditasi</button>
       <button id="btn-breakthrough" class="btn btn-gold" disabled>✦ Terobosan Alam</button>
 
       <div class="log-box">
-        <div class="log-title">📜 Catatan Pencapaian</div>
+        <div class="log-title">📜 Catatan</div>
         <ul id="log"></ul>
       </div>
     </section>
 
-    <!-- CENTER PANEL: Tabs -->
+    <!-- MAIN PANEL -->
     <section class="panel main-panel">
       <nav class="tabs">
-        <button class="tab active" data-tab="techniques">🌀 Teknik</button>
+        <button class="tab active" data-tab="adventure">⚔ Petualangan</button>
+        <button class="tab" data-tab="class">🎭 Kelas</button>
+        <button class="tab" data-tab="skills">✨ Skill</button>
+        <button class="tab" data-tab="techniques">🌀 Teknik</button>
         <button class="tab" data-tab="pills">💊 Pil</button>
-        <button class="tab" data-tab="adventure">⚔ Petualangan</button>
         <button class="tab" data-tab="artifacts">🗡 Artefak</button>
       </nav>
 
+      <!-- ADVENTURE TAB -->
+      <div class="tab-content active" id="tab-adventure">
+        <h3 id="region-title">Hutan Bambu Roh</h3>
+        <p class="tab-desc" id="region-desc">Pilih region untuk memulai petualangan.</p>
+
+        <div class="map-container" id="map-container"></div>
+
+        <div class="stage-info">
+          <div>
+            <div class="stage-title" id="stage-title">Stage 1</div>
+            <div class="stage-progress" id="stage-progress">Musuh 0 / 5</div>
+            <div class="stage-dots" id="stage-dots"></div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size:11px;color:var(--text-dim)">Hadiah per musuh</div>
+            <div style="font-size:14px;color:var(--accent-2);font-weight:700" id="stage-reward">◈ 10</div>
+          </div>
+        </div>
+
+        <div class="battle-arena" id="battle-arena">
+          <div class="arena-bg bamboo" id="arena-bg"></div>
+          <div class="effect-layer" id="effect-layer"></div>
+          <div class="arena-stage">
+            <!-- Player -->
+            <div class="fighter player" id="player-fighter">
+              <div class="fighter-sprite" id="player-sprite">🧘</div>
+              <div class="fighter-name" id="player-name">Kultivator</div>
+              <div class="fighter-hp">
+                <div class="fighter-hpfill" id="player-hpfill" style="width:100%"></div>
+              </div>
+              <div class="fighter-hp-text"><span id="player-hp">100</span> / <span id="player-hpmax">100</span></div>
+            </div>
+            <div class="vs-indicator">VS</div>
+            <!-- Enemy -->
+            <div class="fighter enemy" id="enemy-fighter">
+              <div class="fighter-sprite" id="enemy-sprite">🐺</div>
+              <div class="fighter-name" id="enemy-name">Serigala Roh</div>
+              <div class="fighter-hp">
+                <div class="fighter-hpfill" id="enemy-hpfill" style="width:100%"></div>
+              </div>
+              <div class="fighter-hp-text"><span id="enemy-hp">50</span> / <span id="enemy-hpmax">50</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-bar" id="skill-bar"></div>
+
+        <div class="battle-controls">
+          <button id="btn-attack" class="btn btn-danger">⚔ Serang Biasa</button>
+          <button id="btn-auto" class="btn btn-secondary">⚙ Auto: Off</button>
+          <button id="btn-flee" class="btn btn-secondary">🏃 Kabur</button>
+        </div>
+
+        <div class="battle-log" id="battle-log"></div>
+      </div>
+
+      <!-- CLASS TAB -->
+      <div class="tab-content" id="tab-class">
+        <h3>Pilih Kelas Kultivatormu</h3>
+        <p class="tab-desc">Setiap kelas punya skill unik. Kamu bisa ganti kelas kapan saja (reset skill cooldown).</p>
+        <div class="class-grid" id="class-grid"></div>
+      </div>
+
+      <!-- SKILLS TAB -->
+      <div class="tab-content" id="tab-skills">
+        <h3>Skill Kelas</h3>
+        <p class="tab-desc">Skill dibuka otomatis saat kamu naik alam. Gunakan dalam pertempuran!</p>
+        <div id="skills-list" class="card-list"></div>
+      </div>
+
       <!-- TECHNIQUES TAB -->
-      <div class="tab-content active" id="tab-techniques">
+      <div class="tab-content" id="tab-techniques">
         <h3>Teknik Kultivasi</h3>
-        <p class="tab-desc">Pelajari teknik untuk meningkatkan kecepatan absorpsi Qi secara permanen.</p>
+        <p class="tab-desc">Tingkatkan kecepatan absorpsi Qi secara permanen.</p>
         <div id="techniques-list" class="card-list"></div>
       </div>
 
       <!-- PILLS TAB -->
       <div class="tab-content" id="tab-pills">
         <h3>Pil Spiritual</h3>
-        <p class="tab-desc">Konsumsi pil untuk bonus Qi instan atau meningkatkan peluang terobosan.</p>
+        <p class="tab-desc">Bonus Qi instan atau boost peluang terobosan.</p>
         <div id="pills-list" class="card-list"></div>
-      </div>
-
-      <!-- ADVENTURE TAB -->
-      <div class="tab-content" id="tab-adventure">
-        <h3>Petualangan</h3>
-        <p class="tab-desc">Hadapi iblis dan binatang roh untuk mendapatkan batu roh.</p>
-        <div id="adventure-area">
-          <div id="monster-card" class="monster-card">
-            <div class="monster-name" id="m-name">Serigala Roh</div>
-            <div class="monster-stats">
-              <span>❤ HP: <b id="m-hp">50</b>/<b id="m-hpmax">50</b></span>
-              <span>⚔ ATK: <b id="m-atk">5</b></span>
-            </div>
-            <div class="monster-hpbar"><div class="monster-hpfill" id="m-hpfill"></div></div>
-            <div class="monster-reward">Hadiah: <b id="m-reward">10</b> Batu Roh</div>
-          </div>
-          <button id="btn-fight" class="btn btn-danger">⚔ Serang</button>
-          <div class="battle-log" id="battle-log"></div>
-          <button id="btn-next-monster" class="btn btn-secondary" style="display:none;">➤ Musuh Berikutnya</button>
-        </div>
       </div>
 
       <!-- ARTIFACTS TAB -->
       <div class="tab-content" id="tab-artifacts">
         <h3>Artefak</h3>
-        <p class="tab-desc">Perkuat dirimu dengan pusaka legendaris (bonus permanen).</p>
+        <p class="tab-desc">Pusaka legendaris dengan bonus permanen.</p>
         <div id="artifacts-list" class="card-list"></div>
       </div>
     </section>
@@ -106,7 +159,7 @@
   <div id="modal-tribulation" class="modal hidden">
     <div class="modal-content tribulation">
       <h2>⚡ BENCANA PETIR ⚡</h2>
-      <p id="trib-text">Kamu akan menyeberangi bencana besar. Resiko tinggi, hadiah besar.</p>
+      <p id="trib-text">Kamu akan menyeberangi bencana besar.</p>
       <div class="trib-chance">Peluang sukses: <b id="trib-chance">70%</b></div>
       <div class="trib-buttons">
         <button id="btn-trib-accept" class="btn btn-gold">⚡ Hadapi!</button>
@@ -127,7 +180,7 @@
   <footer class="footer">
     <button id="btn-save" class="btn-mini">💾 Simpan</button>
     <button id="btn-reset" class="btn-mini btn-danger-mini">⟲ Reset Progres</button>
-    <span class="footer-tip">Progress tersimpan otomatis. Kultivasi berjalan meski tab ditutup.</span>
+    <span class="footer-tip">Tombol: 1-5 = skill cepat, Space = serang</span>
   </footer>
 
   <script src="game.js"></script>
