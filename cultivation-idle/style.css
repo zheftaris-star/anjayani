@@ -215,9 +215,75 @@ body {
 }
 
 .fighter { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; }
+
+/* Sprite container with aura */
+.sprite-box {
+  position: relative; width: 120px; height: 120px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sprite-aura {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle, var(--sprite-aura, rgba(201,163,255,0.6)) 0%, transparent 70%);
+  animation: auraPulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes auraPulse {
+  0%,100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+.sprite-ring {
+  position: absolute; inset: 5px; border-radius: 50%;
+  border: 2px solid var(--sprite-aura, rgba(201,163,255,0.7));
+  border-top-color: transparent; border-right-color: transparent;
+  animation: ringSpin 3s linear infinite;
+  opacity: 0.7; z-index: 2;
+}
+@keyframes ringSpin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+.sprite-particles {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+}
+.sprite-particles::before, .sprite-particles::after {
+  content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sprite-aura, #c9a3ff);
+  box-shadow: 0 0 8px var(--sprite-aura, #c9a3ff);
+  top: 50%; left: 50%;
+  animation: orbit 4s linear infinite;
+}
+.sprite-particles::after { animation-delay: -2s; animation-duration: 3.5s; }
+@keyframes orbit {
+  0%   { transform: translate(-50%,-50%) rotate(0) translateX(55px) rotate(0); }
+  100% { transform: translate(-50%,-50%) rotate(360deg) translateX(55px) rotate(-360deg); }
+}
+
+/* Class-specific auras */
+.fighter.cls-sword { --sprite-aura: rgba(124, 216, 255, 0.7); }
+.fighter.cls-fist  { --sprite-aura: rgba(255, 140, 50, 0.7); }
+.fighter.cls-mage  { --sprite-aura: rgba(201, 163, 255, 0.8); }
+.fighter.cls-healer{ --sprite-aura: rgba(125, 255, 176, 0.7); }
+
+/* Enemy aura variations */
+.fighter.enemy { --sprite-aura: rgba(255, 93, 122, 0.6); }
+.fighter.enemy.boss-mode { --sprite-aura: rgba(255, 60, 100, 0.9); }
+.fighter.enemy.boss-mode .sprite-aura { animation: bossAura 1.2s ease-in-out infinite; }
+@keyframes bossAura {
+  0%,100% { transform: scale(1); opacity: 0.6; box-shadow: 0 0 20px rgba(255,60,100,0.6) inset; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 40px rgba(255,60,100,0.9) inset; }
+}
+.boss-crown {
+  position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+  font-size: 28px; filter: drop-shadow(0 0 6px #ffd166);
+  animation: crownFloat 2s ease-in-out infinite; z-index: 5;
+}
+@keyframes crownFloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-6px); } }
+
 .fighter-sprite {
-  font-size: 72px; filter: drop-shadow(0 0 10px rgba(201, 163, 255, 0.5));
-  transition: transform 0.25s ease; position: relative;
+  font-size: 80px; filter: drop-shadow(0 0 14px var(--sprite-aura, rgba(201,163,255,0.5)));
+  transition: transform 0.25s ease; position: relative; z-index: 3;
+  animation: spriteIdle 2.5s ease-in-out infinite;
+}
+@keyframes spriteIdle {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 .fighter-hp {
   width: 100%; max-width: 200px; height: 12px; background: rgba(0, 0, 0, 0.5);
@@ -232,14 +298,38 @@ body {
 .fighter-hp-text { font-size: 11px; color: var(--text); }
 .fighter.attack-anim .fighter-sprite { animation: attackLunge 0.4s ease-out; }
 .fighter.enemy.attack-anim .fighter-sprite { animation: attackLungeEnemy 0.4s ease-out; }
-@keyframes attackLunge { 0% { transform: translateX(0); } 50% { transform: translateX(30px) scale(1.1); } 100% { transform: translateX(0); } }
-@keyframes attackLungeEnemy { 0% { transform: translateX(0) scaleX(-1); } 50% { transform: translateX(-30px) scale(1.1) scaleX(-1); } 100% { transform: translateX(0) scaleX(-1); } }
+@keyframes attackLunge { 0% { transform: translateX(0); } 50% { transform: translateX(40px) scale(1.15) rotate(-8deg); } 100% { transform: translateX(0); } }
+@keyframes attackLungeEnemy { 0% { transform: translateX(0) scaleX(-1); } 50% { transform: translateX(-40px) scale(1.15) scaleX(-1) rotate(8deg); } 100% { transform: translateX(0) scaleX(-1); } }
 .fighter.hurt-anim .fighter-sprite { animation: hurt 0.3s ease-out; }
-@keyframes hurt { 0%,100% { filter: none; } 30% { filter: brightness(3) drop-shadow(0 0 12px #ff5d7a); transform: translateX(-4px); } 60% { transform: translateX(4px); } }
-.fighter.dead .fighter-sprite { opacity: 0.3; filter: grayscale(1); transform: rotate(90deg); }
+@keyframes hurt { 0%,100% { filter: none; } 30% { filter: brightness(3) drop-shadow(0 0 14px #ff5d7a); transform: translateX(-6px); } 60% { transform: translateX(6px); } }
+.fighter.dead { opacity: 0.4; }
+.fighter.dead .fighter-sprite { animation: deathFall 0.6s ease-in forwards !important; filter: grayscale(1); }
+@keyframes deathFall { 0% { transform: rotate(0); opacity: 1; } 100% { transform: rotate(90deg) translateY(20px); opacity: 0.3; } }
+.fighter.dead .sprite-aura, .fighter.dead .sprite-ring, .fighter.dead .sprite-particles { opacity: 0 !important; animation: none !important; }
 .fighter.enemy .fighter-sprite { transform: scaleX(-1); }
-.fighter.victory .fighter-sprite { animation: victory 1s ease-in-out infinite; }
-@keyframes victory { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px) rotate(5deg); } }
+.fighter.victory .fighter-sprite { animation: victory 1s ease-in-out infinite !important; }
+@keyframes victory { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(10deg) scale(1.1); } }
+
+/* Weapon / class accent floating beside sprite */
+.weapon-accent {
+  position: absolute; font-size: 28px; z-index: 4;
+  filter: drop-shadow(0 0 6px var(--sprite-aura, #fff));
+  animation: weaponFloat 2s ease-in-out infinite;
+}
+.weapon-accent.left { left: -10px; top: 30%; }
+.weapon-accent.right { right: -10px; top: 60%; animation-delay: -1s; }
+@keyframes weaponFloat {
+  0%,100% { transform: translateY(0) rotate(-10deg); }
+  50% { transform: translateY(-8px) rotate(10deg); }
+}
+
+/* Screen flash on hit */
+.screen-flash {
+  position: absolute; inset: 0; pointer-events: none; z-index: 20;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+  animation: flashFade 0.3s ease-out forwards;
+}
+@keyframes flashFade { 0% { opacity: 1; } 100% { opacity: 0; } }
 
 .vs-indicator {
   font-size: 28px; font-weight: 900; color: var(--accent-2); text-align: center;

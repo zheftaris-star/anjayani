@@ -87,7 +87,12 @@
           <div class="arena-stage">
             <!-- Player -->
             <div class="fighter player" id="player-fighter">
-              <div class="fighter-sprite" id="player-sprite">🧘</div>
+              <div class="sprite-box" id="player-spritebox">
+                <div class="sprite-aura"></div>
+                <div class="sprite-ring"></div>
+                <div class="sprite-particles"></div>
+                <div class="fighter-sprite" id="player-sprite">🧘</div>
+              </div>
               <div class="fighter-name" id="player-name">Kultivator</div>
               <div class="fighter-hp">
                 <div class="fighter-hpfill" id="player-hpfill" style="width:100%"></div>
@@ -97,7 +102,12 @@
             <div class="vs-indicator">VS</div>
             <!-- Enemy -->
             <div class="fighter enemy" id="enemy-fighter">
-              <div class="fighter-sprite" id="enemy-sprite">🐺</div>
+              <div class="sprite-box" id="enemy-spritebox">
+                <div class="sprite-aura"></div>
+                <div class="sprite-ring"></div>
+                <div class="sprite-particles"></div>
+                <div class="fighter-sprite" id="enemy-sprite">🐺</div>
+              </div>
               <div class="fighter-name" id="enemy-name">Serigala Roh</div>
               <div class="fighter-hp">
                 <div class="fighter-hpfill" id="enemy-hpfill" style="width:100%"></div>
@@ -179,8 +189,9 @@
 
   <footer class="footer">
     <button id="btn-save" class="btn-mini">💾 Simpan</button>
+    <button id="btn-mute" class="btn-mini">🔊 Suara: ON</button>
     <button id="btn-reset" class="btn-mini btn-danger-mini">⟲ Reset Progres</button>
-    <span class="footer-tip">Tombol: 1-5 = skill cepat, Space = serang</span>
+    <span class="footer-tip">Tombol: 1-4 = skill, Space = serang</span>
   </footer>
 
   <script src="game.js"></script>
